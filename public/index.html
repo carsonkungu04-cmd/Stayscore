@@ -1,4 +1,4 @@
- html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -58,9 +58,68 @@
 <section class="hero" id="join">
   <h2>Become a StayScore Member</h2>
   <p>One-time membership: <strong>KSh 1,000</strong></p>
-   <button class="btn" type="button" onclick="alert('M-Pesa payment setup is not complete yet. Please try again later.')">
-  Subscribe Now — KSh 1,000
-</button>
+   <div id="paymentForm">
+  <input
+    id="phone"
+    type="tel"
+    placeholder="07XXXXXXXX"
+    maxlength="13"
+    style="padding:15px;width:240px;border:1px solid #ccc;border-radius:8px;margin:10px;"
+  >
+
+  <button class="btn" type="button" onclick="payMembership()">
+    Pay KSh 1,000
+  </button>
+
+  <p id="paymentMessage"></p>
+</div>
+
+<script>
+async function payMembership() {
+  const phoneInput = document.getElementById("phone");
+  const message = document.getElementById("paymentMessage");
+
+  let phone = phoneInput.value.trim().replace(/\s+/g, "");
+
+  if (phone.startsWith("+")) {
+    phone = phone.substring(1);
+  }
+
+  if (phone.startsWith("07") || phone.startsWith("01")) {
+    phone = "254" + phone.substring(1);
+  }
+
+  if (!/^254[17][0-9]{8}$/.test(phone)) {
+    message.textContent = "Enter a valid Kenyan phone number.";
+    return;
+  }
+
+  message.textContent = "Sending M-Pesa payment request...";
+
+  try {
+    const response = await fetch("/api/pay", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ phone })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      message.textContent =
+        "Payment request sent. Check your phone for the M-Pesa prompt.";
+    } else {
+      message.textContent =
+        data.error || "Payment request failed.";
+    }
+
+  } catch (error) {
+    message.textContent = "Unable to connect to the payment service.";
+  }
+}
+</script>
 </section>
 
 <footer>
