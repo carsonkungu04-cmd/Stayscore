@@ -14,7 +14,9 @@ app.get("/", (req, res) => {
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "StayScore is running" });
-});app.post("/api/pay", async (req, res) => {
+});
+
+app.post("/api/pay", async (req, res) => {
   try {
     const { phone } = req.body;
 
