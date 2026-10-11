@@ -87,6 +87,13 @@ app.post("/api/pay", async (req, res) => {
       error: "Payment request failed"
     });
   }
+});app.post("/api/mpesa/callback", (req, res) => {
+  console.log("M-Pesa callback:", JSON.stringify(req.body));
+
+  res.json({
+    ResultCode: 0,
+    ResultDesc: "Accepted"
+  });
 });
 
 const PORT = process.env.PORT || 3000;
