@@ -1,654 +1,664 @@
+  
   <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>StayScore — Member Dashboard</title>
-
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Inter,Arial,sans-serif;
-  background:#f5f6f8;
-  color:#111827;
-}
-
-button{
-  font-family:inherit;
-  cursor:pointer;
-}
-
-.topbar{
-  height:72px;
-  background:#07111f;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 6%;
-}
-
-.logo{
-  font-size:25px;
-  font-weight:800;
-  letter-spacing:-1px;
-}
-
-.logo span{
-  color:#d8b15c;
-}
-
-.profile{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.avatar{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#d8b15c,#8d6a2c);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-weight:800;
-}
-
-.profile small{
-  display:block;
-  color:#9da8b6;
-  font-size:11px;
-}
-
-.profile strong{
-  font-size:14px;
-}
-
-.dashboard{
-  max-width:1250px;
-  margin:auto;
-  padding:35px 22px 90px;
-}
-
-.welcome{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  margin-bottom:28px;
-}
-
-.welcome small{
-  color:#8a6a32;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:2px;
-}
-
-.welcome h1{
-  font-size:36px;
-  margin-top:5px;
-}
-
-.status{
-  background:#e8f6ee;
-  color:#187544;
-  padding:9px 14px;
-  border-radius:30px;
-  font-size:13px;
-  font-weight:700;
-}
-
-.balance{
-  background:
-    linear-gradient(115deg,rgba(8,19,33,.98),rgba(16,42,62,.94)),
-    #081321;
-  color:white;
-  border-radius:22px;
-  padding:32px;
-  display:grid;
-  grid-template-columns:1.5fr 1fr;
-  gap:25px;
-  box-shadow:0 20px 45px rgba(7,17,31,.16);
-  overflow:hidden;
-  position:relative;
-}
-
-.balance:after{
-  content:"";
-  position:absolute;
-  width:260px;
-  height:260px;
-  border-radius:50%;
-  right:-90px;
-  top:-100px;
-  border:1px solid rgba(216,177,92,.25);
-}
-
-.balance-label{
-  color:#9eabb9;
-  font-size:13px;
-}
-
-.amount{
-  font-size:48px;
-  font-weight:800;
-  margin:8px 0;
-  letter-spacing:-2px;
-}
-
-.balance-note{
-  color:#aeb8c5;
-  font-size:13px;
-}
-
-.withdraw{
-  display:flex;
-  justify-content:end;
-  align-items:center;
-}
-
-.withdraw button{
-  background:#d8b15c;
-  border:0;
-  padding:15px 22px;
-  border-radius:8px;
-  font-weight:800;
-  color:#101923;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  margin:22px 0 42px;
-}
-
-.stat{
-  background:white;
-  border:1px solid #e5e8ed;
-  padding:22px;
-  border-radius:14px;
-}
-
-.stat span{
-  color:#7a8491;
-  font-size:12px;
-}
-
-.stat strong{
-  display:block;
-  font-size:24px;
-  margin-top:5px;
-}
-
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  margin-bottom:18px;
-}
-
-.section-title h2{
-  font-size:25px;
-}
-
-.section-title a{
-  color:#8b6a30;
-  font-size:13px;
-  font-weight:700;
-}
-
-.opportunities{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-}
-
-.hotel{
-  background:white;
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid #e6e9ee;
-  box-shadow:0 8px 25px rgba(20,30,45,.05);
-}
-
-.photo{
-  height:210px;
-  position:relative;
-  background:
-    linear-gradient(135deg,#1e3549,#8399a7);
-}
-
-.photo.two{
-  background:
-    linear-gradient(135deg,#3b3028,#b49a7b);
-}
-
-.photo.three{
-  background:
-    linear-gradient(135deg,#183e3b,#78938b);
-}
-
-.photo:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.55));
-}
-
-.reward{
-  position:absolute;
-  right:14px;
-  top:14px;
-  z-index:2;
-  background:#d8b15c;
-  color:#111827;
-  padding:8px 12px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:800;
-}
-
-.hotel-info{
-  padding:20px;
-}
-
-.hotel-info h3{
-  font-size:19px;
-}
-
-.location{
-  color:#818b98;
-  font-size:13px;
-  margin:4px 0 12px;
-}
-
-.stars{
-  color:#c9983d;
-  font-size:14px;
-}
-
-.hotel-bottom{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-top:18px;
-}
-
-.hotel-bottom button{
-  background:#07111f;
-  color:white;
-  border:0;
-  padding:10px 15px;
-  border-radius:7px;
-  font-weight:700;
-}
-
-.activity{
-  margin-top:45px;
-  display:grid;
-  grid-template-columns:1.4fr 1fr;
-  gap:25px;
-}
-
-.panel{
-  background:white;
-  border:1px solid #e5e8ed;
-  border-radius:16px;
-  padding:24px;
-}
-
-.panel h3{
-  margin-bottom:20px;
-}
-
-.activity-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:17px 0;
-  border-top:1px solid #edf0f3;
-}
-
-.activity-left{
-  display:flex;
-  align-items:center;
-  gap:13px;
-}
-
-.hotel-mini{
-  width:45px;
-  height:45px;
-  border-radius:9px;
-  background:linear-gradient(135deg,#273f55,#8da0ad);
-}
-
-.activity-row small{
-  color:#87909c;
-}
-
-.earned{
-  color:#18804b;
-  font-weight:800;
-}
-
-.chart{
-  height:170px;
-  display:flex;
-  align-items:end;
-  gap:13px;
-  padding-top:15px;
-}
-
-.bar{
-  flex:1;
-  background:linear-gradient(to top,#b68a39,#dfc37e);
-  border-radius:5px 5px 0 0;
-}
-
-.bar:nth-child(1){height:35%}
-.bar:nth-child(2){height:55%}
-.bar:nth-child(3){height:43%}
-.bar:nth-child(4){height:75%}
-.bar:nth-child(5){height:62%}
-.bar:nth-child(6){height:90%}
-.bar:nth-child(7){height:72%}
-
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:68px;
-  background:rgba(7,17,31,.97);
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:50;
-}
-
-.bottom-nav a{
-  color:#9da8b6;
-  text-decoration:none;
-  font-size:11px;
-  text-align:center;
-}
-
-.bottom-nav a.active{
-  color:#d8b15c;
-}
-
-.bottom-nav span{
-  display:block;
-  font-size:20px;
-  margin-bottom:2px;
-}
-
-@media(max-width:850px){
-
-  .topbar{
-    padding:0 20px;
-  }
-
-  .profile div:last-child{
-    display:none;
-  }
-
-  .dashboard{
-    padding:28px 16px 90px;
-  }
-
-  .welcome{
-    align-items:start;
-    gap:15px;
-  }
-
-  .welcome h1{
-    font-size:28px;
-  }
-
-  .balance{
-    grid-template-columns:1fr;
-  }
-
-  .withdraw{
-    justify-content:start;
-  }
-
-  .stats{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .stat{
-    padding:15px 10px;
-  }
-
-  .stat strong{
-    font-size:18px;
-  }
-
-  .opportunities{
-    grid-template-columns:1fr;
-  }
-
-  .activity{
-    grid-template-columns:1fr;
-  }
-
-  .section-title h2{
-    font-size:21px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>StayScore — Review Hotels. Earn Rewards.</title>
+
+  <meta
+    name="description"
+    content="Join StayScore for KSh 1,000 and become a hotel reviewer. Discover hotels, submit genuine reviews and earn eligible rewards."
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f8fa;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav {
+      height: 72px;
+      background: #071426;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6%;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #d9b76c;
+    }
+
+    .nav-btn {
+      border: 1px solid #d9b76c;
+      color: #fff;
+      padding: 9px 17px;
+      border-radius: 25px;
+      font-size: 14px;
+    }
+
+    .hero {
+      background:
+        linear-gradient(rgba(5,16,31,.78), rgba(5,16,31,.82)),
+        url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1800&q=85")
+        center/cover;
+      color: white;
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      padding: 80px 6%;
+    }
+
+    .hero-content {
+      max-width: 700px;
+    }
+
+    .badge {
+      display: inline-block;
+      color: #e5c87b;
+      border: 1px solid rgba(229,200,123,.5);
+      padding: 7px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      margin-bottom: 22px;
+      background: rgba(255,255,255,.06);
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -3px;
+      margin-bottom: 25px;
+    }
+
+    .hero p {
+      color: #d9e0e9;
+      font-size: 19px;
+      max-width: 600px;
+      margin-bottom: 32px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 13px;
+      flex-wrap: wrap;
+    }
+
+    .primary {
+      background: #d9b76c;
+      color: #101827;
+      padding: 15px 25px;
+      border-radius: 9px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+    }
+
+    .secondary {
+      border: 1px solid rgba(255,255,255,.45);
+      padding: 15px 25px;
+      border-radius: 9px;
+      color: white;
+    }
+
+    section {
+      padding: 75px 6%;
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 45px;
+    }
+
+    .section-title h2 {
+      font-size: 38px;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #667085;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .step {
+      background: white;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(10,20,40,.06);
+    }
+
+    .number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #071426;
+      color: #d9b76c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .step h3 {
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: #697386;
+      font-size: 14px;
+    }
+
+    .membership {
+      background: #071426;
+      color: white;
+    }
+
+    .membership-box {
+      max-width: 1050px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .membership-text h2 {
+      font-size: 42px;
+      line-height: 1.1;
+      margin-bottom: 17px;
+    }
+
+    .membership-text p {
+      color: #cbd3df;
+      margin-bottom: 25px;
+    }
+
+    .benefits {
+      list-style: none;
+    }
+
+    .benefits li {
+      margin: 13px 0;
+      color: #e7ebf0;
+    }
+
+    .benefits li::before {
+      content: "✓";
+      color: #d9b76c;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .payment-card {
+      background: white;
+      color: #172033;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+    }
+
+    .payment-card .price {
+      font-size: 42px;
+      font-weight: 800;
+      color: #071426;
+      margin: 5px 0;
+    }
+
+    .payment-card small {
+      color: #667085;
+    }
+
+    .payment-card label {
+      display: block;
+      margin-top: 23px;
+      margin-bottom: 7px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .payment-card input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d5d9e0;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .payment-card button {
+      width: 100%;
+      margin-top: 17px;
+      padding: 15px;
+      background: #d9b76c;
+      border: none;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #message {
+      margin-top: 14px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .hotels {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .hotel {
+      background: white;
+      border-radius: 17px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(10,20,40,.07);
+    }
+
+    .hotel-image {
+      height: 210px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hotel-body {
+      padding: 22px;
+    }
+
+    .hotel-body h3 {
+      margin-bottom: 7px;
+    }
+
+    .stars {
+      color: #d3a944;
+      margin-bottom: 10px;
+    }
+
+    .hotel-body p {
+      color: #697386;
+      font-size: 14px;
+    }
+
+    .trust {
+      background: #eef1f5;
+    }
+
+    .trust-grid {
+      max-width: 1000px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
+
+    .trust-card {
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+    }
+
+    .trust-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .trust-card p {
+      color: #697386;
+      font-size: 14px;
+    }
+
+    .faq {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    details {
+      background: white;
+      padding: 20px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.04);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    footer {
+      background: #050d19;
+      color: #b8c0cc;
+      padding: 35px 6%;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    @media(max-width: 850px) {
+      .steps,
+      .hotels,
+      .trust-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .membership-box {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width: 600px) {
+      .nav {
+        padding: 0 5%;
+      }
+
+      .nav-btn {
+        padding: 8px 12px;
+      }
+
+      .hero {
+        min-height: 580px;
+        padding: 70px 5%;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      section {
+        padding: 60px 5%;
+      }
+
+      .steps,
+      .hotels,
+      .trust-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .membership-text h2 {
+        font-size: 34px;
+      }
+
+      .payment-card {
+        padding: 24px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="topbar">
+  <nav class="nav">
+    <div class="logo">Stay<span>Score</span></div>
 
-  <div class="logo">
-    Stay<span>Score</span>
-  </div>
-
-  <div class="profile">
-
-    <div class="avatar">
-      J
-    </div>
-
-    <div>
-      <small>MEMBER</small>
-      <strong>James</strong>
-    </div>
-
-  </div>
-
-</header>
-
-<main class="dashboard">
-
-  <div class="welcome">
-
-    <div>
-      <small>Member Dashboard</small>
-      <h1>Good morning, James.</h1>
-    </div>
-
-    <div class="status">
-      ● Membership Active
-    </div>
-
-  </div>
-
-  <section class="balance">
-
-    <div>
-
-      <div class="balance-label">
-        AVAILABLE BALANCE
-      </div>
-
-      <div class="amount">
-        KSh 4,850
-      </div>
-
-      <div class="balance-note">
-        From approved hotel reviews
-      </div>
-
-    </div>
-
-    <div class="withdraw">
-
-      <button>
-        Withdraw Earnings
-      </button>
-
-    </div>
-
-  </section>
-
-  <section class="stats">
-
-    <div class="stat">
-      <span>TOTAL EARNED</span>
-      <strong>KSh 7,200</strong>
-    </div>
-
-    <div class="stat">
-      <span>PENDING</span>
-      <strong>KSh 1,850</strong>
-    </div>
-
-    <div class="stat">
-      <span>REVIEWS</span>
-      <strong>18</strong>
-    </div>
-
-  </section>
-
-  <div class="section-title">
-
-    <h2>Featured opportunities</h2>
-
-    <a href="#">
-      View all
+    <a href="#membership" class="nav-btn">
+      Join StayScore
     </a>
+  </nav>
 
-  </div>
+  <header class="hero">
+    <div class="hero-content">
 
-  <section class="opportunities">
-
-    <div class="hotel">
-
-      <div class="photo">
-        <div class="reward">
-          KSh 350
-        </div>
+      <div class="badge">
+        HOTEL REVIEW & REWARDS PLATFORM
       </div>
 
-      <div class="hotel-info">
+      <h1>
+        Review Hotels.<br>
+        Earn Rewards.
+      </h1>
 
-        <h3>Villa Serena Nairobi</h3>
+      <p>
+        Join StayScore and become part of a community that shares
+        genuine hotel experiences. Discover review opportunities,
+        submit quality reviews and earn eligible rewards.
+      </p>
 
-        <div class="location">
-          Nairobi, Kenya
+      <div class="hero-buttons">
+        <a href="#membership" class="primary">
+          Join for KSh 1,000
+        </a>
+
+        <a href="#how-it-works" class="secondary">
+          How It Works
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+
+  <section id="how-it-works">
+
+    <div class="section-title">
+      <h2>How StayScore Works</h2>
+      <p>
+        Getting started is simple. Become a member and access the
+        StayScore reviewer platform.
+      </p>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="number">1</div>
+        <h3>Join</h3>
+        <p>
+          Pay the one-time KSh 1,000 membership fee to join StayScore.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="number">2</div>
+        <h3>Discover</h3>
+        <p>
+          Browse available hotel review opportunities on the platform.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="number">3</div>
+        <h3>Review</h3>
+        <p>
+          Share genuine experiences and detailed hotel reviews.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="number">4</div>
+        <h3>Earn</h3>
+        <p>
+          Eligible and approved reviews can qualify for rewards.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="membership" id="membership">
+
+    <div class="membership-box">
+
+      <div class="membership-text">
+
+        <div class="badge">
+          STAYSCORE MEMBERSHIP
         </div>
 
-        <div class="stars">
-          ★★★★★
+        <h2>
+          Start your reviewer journey today.
+        </h2>
+
+        <p>
+          Membership gives you access to the StayScore reviewer
+          experience and available review opportunities.
+        </p>
+
+        <ul class="benefits">
+          <li>Access the member platform</li>
+          <li>Discover available hotel review opportunities</li>
+          <li>Submit detailed hotel reviews</li>
+          <li>Track approved review rewards</li>
+          <li>Build your reviewer history</li>
+        </ul>
+
+      </div>
+
+
+      <div class="payment-card">
+
+        <small>ONE-TIME MEMBERSHIP</small>
+
+        <div class="price">
+          KSh 1,000
         </div>
 
-        <div class="hotel-bottom">
+        <small>
+          Pay securely through M-Pesa
+        </small>
 
-          <small>
-            Hotel review
-          </small>
+        <label for="phone">
+          M-Pesa Phone Number
+        </label>
 
-          <button>
-            Review
-          </button>
+        <input
+          id="phone"
+          type="tel"
+          placeholder="e.g. 0712345678"
+          autocomplete="tel"
+        >
 
-        </div>
+        <button onclick="payMembership()">
+          Pay KSh 1,000 with M-Pesa
+        </button>
+
+        <div id="message"></div>
 
       </div>
 
     </div>
 
-    <div class="hotel">
+  </section>
 
-      <div class="photo two">
-        <div class="reward">
-          KSh 300
-        </div>
-      </div>
 
-      <div class="hotel-info">
+  <section>
 
-        <h3>Nairobi View Hotel</h3>
+    <div class="section-title">
+      <h2>Explore Hotel Experiences</h2>
 
-        <div class="location">
-          Nairobi, Kenya
-        </div>
-
-        <div class="stars">
-          ★★★★☆
-        </div>
-
-        <div class="hotel-bottom">
-
-          <small>
-            Hotel review
-          </small>
-
-          <button>
-            Review
-          </button>
-
-        </div>
-
-      </div>
-
+      <p>
+        StayScore is built around real experiences, detailed feedback
+        and useful hotel information.
+      </p>
     </div>
 
-    <div class="hotel">
+    <div class="hotels">
 
-      <div class="photo three">
-        <div class="reward">
-          KSh 250
+      <div class="hotel">
+
+        <div
+          class="hotel-image"
+          style="background-image:url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=80')">
         </div>
+
+        <div class="hotel-body">
+          <h3>Luxury City Stay</h3>
+
+          <div class="stars">
+            ★★★★★
+          </div>
+
+          <p>
+            Reviews covering rooms, service, cleanliness,
+            facilities and overall guest experience.
+          </p>
+        </div>
+
       </div>
 
-      <div class="hotel-info">
 
-        <h3>City Garden Hotel</h3>
+      <div class="hotel">
 
-        <div class="location">
-          Nairobi, Kenya
+        <div
+          class="hotel-image"
+          style="background-image:url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1000&q=80')">
         </div>
 
-        <div class="stars">
-          ★★★★☆
+        <div class="hotel-body">
+          <h3>Premium Hotel</h3>
+
+          <div class="stars">
+            ★★★★☆
+          </div>
+
+          <p>
+            Discover what guests really think about their
+            hotel experience.
+          </p>
         </div>
 
-        <div class="hotel-bottom">
+      </div>
 
-          <small>
-            Hotel review
-          </small>
 
-          <button>
-            Review
-          </button>
+      <div class="hotel">
 
+        <div
+          class="hotel-image"
+          style="background-image:url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80')">
+        </div>
+
+        <div class="hotel-body">
+          <h3>Executive Stay</h3>
+
+          <div class="stars">
+            ★★★★★
+          </div>
+
+          <p>
+            Detailed reviews help create better information
+            for future travellers.
+          </p>
         </div>
 
       </div>
@@ -657,128 +667,202 @@ button{
 
   </section>
 
-  <section class="activity">
 
-    <div class="panel">
+  <section class="trust">
 
-      <h3>Recent activity</h3>
+    <div class="section-title">
+      <h2>Built Around Genuine Reviews</h2>
 
-      <div class="activity-row">
-
-        <div class="activity-left">
-
-          <div class="hotel-mini"></div>
-
-          <div>
-            <strong>Safari Comfort Hotel</strong>
-            <br>
-            <small>5-star review · Approved</small>
-          </div>
-
-        </div>
-
-        <div class="earned">
-          +KSh 300
-        </div>
-
-      </div>
-
-      <div class="activity-row">
-
-        <div class="activity-left">
-
-          <div class="hotel-mini"></div>
-
-          <div>
-            <strong>Nairobi View Hotel</strong>
-            <br>
-            <small>4-star review · Approved</small>
-          </div>
-
-        </div>
-
-        <div class="earned">
-          +KSh 250
-        </div>
-
-      </div>
-
-      <div class="activity-row">
-
-        <div class="activity-left">
-
-          <div class="hotel-mini"></div>
-
-          <div>
-            <strong>City Garden Hotel</strong>
-            <br>
-            <small>Review submitted</small>
-          </div>
-
-        </div>
-
-        <div>
-          Pending
-        </div>
-
-      </div>
-
+      <p>
+        StayScore is designed to encourage useful, honest and
+        experience-based hotel feedback.
+      </p>
     </div>
 
-    <div class="panel">
+    <div class="trust-grid">
 
-      <h3>Your earnings</h3>
-
-      <div class="chart">
-
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-
+      <div class="trust-card">
+        <h3>Real Experiences</h3>
+        <p>
+          Reviews should reflect genuine experiences rather than
+          manufactured ratings.
+        </p>
       </div>
 
-      <small>
-        Last 7 review periods
-      </small>
+      <div class="trust-card">
+        <h3>Quality Reviews</h3>
+        <p>
+          Detailed and useful reviews help travellers make
+          better-informed decisions.
+        </p>
+      </div>
+
+      <div class="trust-card">
+        <h3>Fair Rewards</h3>
+        <p>
+          Eligible reviews may qualify for rewards according to
+          StayScore's review requirements.
+        </p>
+      </div>
 
     </div>
 
   </section>
 
-</main>
 
-<nav class="bottom-nav">
+  <section>
 
-  <a class="active" href="#">
-    <span>⌂</span>
-    Home
-  </a>
+    <div class="section-title">
+      <h2>Frequently Asked Questions</h2>
+    </div>
 
-  <a href="#">
-    <span>⌕</span>
-    Discover
-  </a>
+    <div class="faq">
 
-  <a href="#">
-    <span>★</span>
-    Reviews
-  </a>
+      <details>
+        <summary>How much does membership cost?</summary>
+        <p>
+          StayScore membership currently costs KSh 1,000 as a
+          one-time membership fee.
+        </p>
+      </details>
 
-  <a href="#">
-    <span>◈</span>
-    Earnings
-  </a>
+      <details>
+        <summary>Does paying KSh 1,000 guarantee earnings?</summary>
+        <p>
+          No. Membership does not guarantee earnings. Rewards depend
+          on eligible review opportunities and approved submissions.
+        </p>
+      </details>
 
-  <a href="#">
-    <span>◯</span>
-    Profile
-  </a>
+      <details>
+        <summary>Do I need to give positive hotel ratings?</summary>
+        <p>
+          No. Reviews should be genuine and based on your actual
+          experience. Rewards should not depend on giving a positive
+          rating.
+        </p>
+      </details>
 
-</nav>
+      <details>
+        <summary>How do I pay?</summary>
+        <p>
+          Enter your Kenyan M-Pesa number above and request the
+          KSh 1,000 payment prompt.
+        </p>
+      </details>
+
+    </div>
+
+  </section>
+
+
+  <footer>
+
+    <p>
+      <strong>StayScore</strong> — Review Hotels. Earn Rewards.
+    </p>
+
+    <p>
+      © 2026 StayScore. All rights reserved.
+    </p>
+
+  </footer>
+
+
+  <script>
+
+    function normalizeKenyanPhone(phone) {
+
+      phone = phone.replace(/\s+/g, "");
+
+      if (phone.startsWith("07")) {
+        return "254" + phone.substring(1);
+      }
+
+      if (phone.startsWith("01")) {
+        return "254" + phone.substring(1);
+      }
+
+      if (phone.startsWith("+254")) {
+        return phone.substring(1);
+      }
+
+      if (phone.startsWith("254")) {
+        return phone;
+      }
+
+      return null;
+    }
+
+
+    async function payMembership() {
+
+      const input = document.getElementById("phone");
+      const message = document.getElementById("message");
+
+      const phone = normalizeKenyanPhone(input.value.trim());
+
+      if (!phone) {
+
+        message.style.color = "#b42318";
+
+        message.textContent =
+          "Please enter a valid Kenyan M-Pesa number.";
+
+        return;
+      }
+
+      message.style.color = "#667085";
+
+      message.textContent =
+        "Sending M-Pesa payment request...";
+
+      try {
+
+        const response = await fetch("/api/pay", {
+
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            phone: phone
+          })
+
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+          message.style.color = "#087443";
+
+          message.textContent =
+            "Payment request sent. Check your phone for the M-Pesa prompt.";
+
+        } else {
+
+          message.style.color = "#b42318";
+
+          message.textContent =
+            data.error || "Payment request failed.";
+
+        }
+
+      } catch (error) {
+
+        message.style.color = "#b42318";
+
+        message.textContent =
+          "Unable to connect to the payment service.";
+
+      }
+
+    }
+
+  </script>
 
 </body>
- </html> 
+  </html>      
