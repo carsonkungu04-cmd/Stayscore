@@ -62,7 +62,7 @@ app.post("/api/pay", async (req, res) => {
         Password: password,
         Timestamp: timestamp,
         TransactionType: "CustomerPayBillOnline",
-        Amount: 1000,
+        Amount: 403,800,
         PartyA: phone,
         PartyB: shortcode,
         PhoneNumber: phone,
